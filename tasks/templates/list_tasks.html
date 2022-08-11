@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas Django CRUD</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+    <div class="container"> <!-- espaciado hacia los lados -->
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <h1 class="text-center display-6 fw-bold">Tasks</h1>
+
+                <form action="{% url 'create_task' %}" method="post" class="card card-body bg-light">
+                    {% csrf_token %}
+                    <label class="text-black" for="title">Titulo:</label>
+                    <input type="text" name="title" placeholder="Write a title">
+                    <label class="text-black" for="description">Descripción:</label>
+                    <textarea name="description" rows="2" placeholder="Write a description" class="form-control mb-2"></textarea>
+                    <button class="btn btn-secondary"type="submit">Add</button>
+                </form>
+            
+                {% for task in tasks %}
+                    <div class="card card-body text-black mt-2 d-flex flex-row justify-content-between">
+                        <div>
+                            <h4>{{ task.title }}</h2>
+                            <p>{{ task.description }}</p>
+                        </div>
+                        <form action="{% url 'delete_task' task.id %}" method="post">
+                            {% csrf_token %}
+                            
+                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        </form>
+                    </div>
+                {% empty %}
+                    <h2 class="display-4 text-center">No tasks yet</h2>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<!--
+    <h1>Tasks</h1>
+
+    <form action="{% url 'create_task' %}" method="post">
+        {% csrf_token %}
+        
+        <input type="text" name="title" placeholder="Write a title">
+        <textarea name="description" rows="2" placeholder="Write a description"></textarea>
+        <button type="submit">Add</button>
+    </form>
+
+    {% for task in tasks %}
+        <div class="task">
+            <h4>{{ task.title }}</h2>
+            <p>{{ task.description }}</p>
+            <form action="{% url 'delete_task' task.id %}" method="post">
+                {% csrf_token %}
+                
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No tasks yet</p>
+    {% endfor %}
+-->
