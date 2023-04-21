@@ -3,4 +3,4 @@ Django==4.1.7
 postgres==4.0
 psycopg2-binary==2.9.3
 psycopg2-pool==1.1
-sqlparse==0.4.2
+sqlparse==0.4.4
